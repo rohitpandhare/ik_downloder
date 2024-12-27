@@ -5,7 +5,7 @@ document.getElementById("searchButton").addEventListener("click", async function
         return;
     }
 
-    const response = await fetch(`https://ik-downloder.vercel.app/web/index.html/search?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`https://ik-downloder.vercel.app/search?query=${encodeURIComponent(query)}`);
     if (response.ok) {
         const jsonData = await response.json();
         displayResults(jsonData.docs);
