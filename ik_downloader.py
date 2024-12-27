@@ -55,7 +55,7 @@ def save_search_results(query, pages=1):
 def get_arg_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("-q", "--query", type=str, required=True, help="Search query string")
-    parser.add_argument("-p", "--pages", type=int, default=1, help="Number of pages to fetch")
+    parser.add_argument("-p", "--pages", type=int, default=2, help="Number of pages to fetch")
     return parser
 
 if __name__ == "__main__":
