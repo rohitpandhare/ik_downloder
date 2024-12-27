@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
-            
+
             if (response.ok) {
                 const jsonData = await response.json();
                 displayResults(jsonData.docs);

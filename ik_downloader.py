@@ -8,10 +8,10 @@ from datetime import datetime
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("ikapi")
+logger = logging.getLogger("ik-downloader")
 
 # Retrieve API token from environment variables
-API_TOKEN = os.getenv("9062b4e5cda73f8dbcc1c68f9336b9df2a4a5c8f")
+API_TOKEN = os.getenv("42dbe96677b0804527dc7d6bbfded7c3d0109a48")
 if not API_TOKEN:
     logger.error("API_TOKEN is not set. Please set it as an environment variable.")
     raise EnvironmentError("API_TOKEN is not set.")

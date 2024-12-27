@@ -1,8 +1,15 @@
 from flask import Flask, request, jsonify
-from ik_downloder import search_documents  # Ensure this path is correct
+from ik_downloader import search_documents  # Ensure the import path is correct
+from flask_cors import CORS
+import logging
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS if necessary
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("ik-downloder")
 
 @app.route('/api/search', methods=['GET'])
 def search():
@@ -18,15 +25,19 @@ def search():
     """
     query = request.args.get('query')
     page_num = request.args.get('page_num', default=0, type=int)
-    
+
     if not query:
+        logger.warning("No query provided in the request.")
         return jsonify({'error': 'No query provided. Please provide a query to search.'}), 400
 
     try:
+        logger.info(f"Received search request for query: '{query}', page_num: {page_num}")
         docs = search_documents(query, page_num)
+        logger.info(f"Search successful. Number of documents retrieved: {len(docs)}")
         return jsonify({'docs': docs})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        logger.error(f"Error processing search request: {e}")
+        return jsonify({'error': 'Internal Server Error. Please try again later.'}), 500
 
 def handler(event, context):
     """
