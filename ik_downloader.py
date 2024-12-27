@@ -10,7 +10,7 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("ikapi")
 
-# Retrieve API token from environment variables for security
+# Retrieve API token from environment variables
 API_TOKEN = os.getenv("9062b4e5cda73f8dbcc1c68f9336b9df2a4a5c8f")
 if not API_TOKEN:
     logger.error("API_TOKEN is not set. Please set it as an environment variable.")
@@ -25,7 +25,7 @@ def search_documents(query, page_num=0):
         page_num (int): The page number for pagination.
 
     Returns:
-        dict: JSON response from the API containing search results.
+        list: A list of documents retrieved from the API.
     """
     base_url = "https://api.indiankanoon.org/search/"
     payload = {
@@ -36,12 +36,13 @@ def search_documents(query, page_num=0):
         "Authorization": f"Token {API_TOKEN}",
         "Content-Type": "application/json"
     }
-    
+
     try:
         response = requests.post(base_url, headers=headers, json=payload)
         response.raise_for_status()
         logger.info(f"Successfully fetched data for query: '{query}' on page: {page_num}")
-        return response.json()
+        data = response.json()
+        return data.get("docs", [])
     except requests.exceptions.HTTPError as http_err:
         logger.error(f"HTTP error occurred: {http_err} - Response: {response.text}")
         raise
