@@ -5,7 +5,7 @@ document.getElementById("searchButton").addEventListener("click", async function
         return;
     }
 
-    const response = await fetch(`http://127.0.0.1:5000/search?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`https://legal-server-lac.vercel.app/search?query=${encodeURIComponent(query)}`);
     if (response.ok) {
         const jsonData = await response.json();
         displayResults(jsonData.docs);
