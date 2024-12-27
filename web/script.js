@@ -1,25 +1,15 @@
 document.getElementById("searchButton").addEventListener("click", async function() {
     const query = document.getElementById("searchQuery").value;
-
     if (!query) {
         alert("Please enter a search term.");
         return;
     }
 
-    try {
-        // Updated to point to the serverless function
-        const response = await fetch(`/search?query=${encodeURIComponent(query)}`);
-        
-        if (!response.ok) {
-            const errorData = await response.json();
-            alert(`Error: ${errorData.error || "Unknown error occurred."}`);
-            return;
-        }
-
+    const response = await fetch(`https://ik-downloder.vercel.app/search?query=${encodeURIComponent(query)}`);
+    if (response.ok) {
         const jsonData = await response.json();
         displayResults(jsonData.docs);
-    } catch (error) {
-        console.error('Fetch error:', error);
+    } else {
         alert("Error fetching data. Please try again.");
     }
 });
@@ -27,7 +17,6 @@ document.getElementById("searchButton").addEventListener("click", async function
 function displayResults(docs) {
     const resultsContainer = document.getElementById("resultsContainer");
     resultsContainer.innerHTML = "";
-
     if (!docs || docs.length === 0) {
         resultsContainer.innerHTML = "<p>No results found.</p>";
         return;
