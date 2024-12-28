@@ -35,3 +35,47 @@ function displayResults(docs) {
         resultsContainer.appendChild(resultDiv);
     });
 }
+///////////
+document.addEventListener("click", async function (event) {
+    if (event.target && event.target.classList.contains("viewFullDocument")) {
+        event.preventDefault();
+        const docId = event.target.getAttribute("data-doc-id");
+        const apiUrl = `https://api.indiankanoon.org/doc/${docId}/`;
+
+        const headers = {
+            Authorization: "Token YOUR_API_TOKEN", // Add your API token here
+        };
+
+        try {
+            const response = await fetch(apiUrl, { headers });
+            if (response.ok) {
+                const documentData = await response.json();
+                renderDocumentInline(documentData, docId); 
+                createDownloadLink(docId);
+            } else {
+                alert("Failed to fetch the document. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred.");
+        }
+    }
+});
+
+function renderDocumentInline(documentData, docId) {
+    const documentContainer = document.getElementById("documentContainer");
+    documentContainer.innerHTML = `
+        <h2>${documentData.title}</h2>
+        <p>${documentData.text}</p>
+        <p><strong>Published on:</strong> ${documentData.publishdate}</p>
+    `;
+}
+
+function createDownloadLink(docId) {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = `https://api.indiankanoon.org/origdoc/${docId}`;
+    downloadLink.download = `LegalCase_${docId}.pdf`;
+    downloadLink.textContent = "Download PDF";
+    downloadLink.classList.add("downloadButton");
+    document.getElementById("documentContainer").appendChild(downloadLink);
+}
