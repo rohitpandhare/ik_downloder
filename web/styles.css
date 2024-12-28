@@ -52,3 +52,24 @@ button:hover {
 .result h3 {
     margin: 0;
 }
+
+#documentContainer {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+}
+
+.downloadButton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #28a745;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.downloadButton:hover {
+    background-color: #218838;
+}
