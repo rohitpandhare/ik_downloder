@@ -5,7 +5,7 @@ document.getElementById("searchButton").addEventListener("click", async function
         return;
     }
 
-    const response = await fetch(`https://legal-education-assistance-portal.vercel.app/search?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`https://try1-neon.vercel.app/search?query=${encodeURIComponent(query)}`);
     if (response.ok) {
         const jsonData = await response.json();
         displayResults(jsonData.docs);
